@@ -20,14 +20,9 @@ var row2_LabelColor = cb.settings.row2_LabelColor;
 var row2_Color = cb.settings.row2_Color;
 var row2_Background = cb.settings.row2_Background;
 
-var row3_LabelText = cb.settings.row3_LabelText;
-var row3_LabelColor = cb.settings.row3_LabelColor;
-var row3_Color = cb.settings.row3_Color;
-var row3_Background = cb.settings.row3_Background;
-
 cb.settings_choices = [
     { name: 'tokens', type: 'int', minValue: 1, default: 100 },
-    { name: 'goal_description', type: 'str', minLength: 1, maxLength: 255 },
+    { name: 'goal_description', type: 'str', minLength: 1, maxLength: 255 }, // Replace 'goal_description' input
     {
         name: "hashtag",
         label: "Hashtags",
@@ -139,26 +134,8 @@ cb.settings_choices = [
         required: true
     },
     {
-        name: "row3_LabelText",
-        label: "Row3 Label Text, default: Latest Tip Received: ",
-        type: 'str',
-        minLength: 1,
-        maxLength: 26,
-        defaultValue: "Latest Tip :",
-        required: true
-    },
-    {
         name: "row3_LabelColor",
         label: "Row3 Label Color, only for Table or Image Panel",
-        type: 'str',
-        minLength: 1,
-        maxLength: 50,
-        defaultValue: "black",
-        required: true
-    },
-    {
-        name: "row3_Color",
-        label: "Row3 Color, only for Table or Image Panel",
         type: 'str',
         minLength: 1,
         maxLength: 50,
@@ -175,6 +152,29 @@ cb.settings_choices = [
         required: true
     },
 ];
+
+// ...
+
+cb.onDrawPanel(function (user) {
+    if (cb.settings.panelConfig == "image") {
+        // ... (previous image panel code remains the same)
+    } else if (cb.settings.panelConfig == "table") {
+        // ... (previous table panel code remains the same)
+    } else {
+        return {
+            'template': '3_rows_of_labels',
+            'row1_label': row1_LabelText + ':',
+            'row1_value': '' + total_tipped + ' / ' + cb.settings.tokens,
+            'row2_label': row2_LabelText + ':',
+            'row2_value': " " + format_username(high_tip_username) + ' (' + high_tip_amount + ')',
+            'row3_label': cb.settings.goal_description, // Display the goal title here
+            'row3_value': '', // No value needed for the goal title
+        };
+    }
+});
+
+// ... (previous code remains the same)
+
 
 // handlers
 
