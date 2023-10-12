@@ -1,5 +1,3 @@
-// Bot 04
-
 // vars
 var total_tipped = 0;
 var high_tip_username = null;
@@ -30,7 +28,13 @@ var row3_Background = cb.settings.row3_Background;
 cb.settings_choices = [
     { name: 'tokens', type: 'int', minValue: 1, default: 100 },
     { name: 'goal_description', type: 'str', minLength: 1, maxLength: 255 },
-
+    {
+        name: "hashtag",
+        label: "Hashtags",
+        type: "str",
+        minLength: 1,
+        maxLength: 255
+    },
     {
         name: "panelConfig",
         label: "Panel configuration",
@@ -45,123 +49,146 @@ cb.settings_choices = [
         label: "Select an image ID. You can see all the images in the top of Code Source section",
         type: "choice",
         choice1: "Image ID written in next section",
-        choice2: "13c0efc6-b965-4045-ba1c-7fcffbac6b15",
-        choice3: "1a683906-7304-4f80-96ea-1d57697d8b25",
-        choice4: "57493d59-17f5-4937-9ac5-c5c0a73366af",
-        choice5: "abf6ae1d-9ef0-4806-a66e-86065772f0c3",
-        choice6: "cd656aff-14e3-4719-a84c-67fa2293c722",
-        choice7: "a32fbc6d-9f37-4ebf-a114-a3f15e8871ae",
-        choice8: "fa9d87de-dded-4b0e-998a-336c0bb9fa96",
-        choice9: "d3a38bae-74d3-4b47-b838-642829178c60",
-        choice10: "c79059a3-ffce-4139-af4a-ddb7406fac1a",
-        choice11: "30f0a81c-c2da-4050-8cd2-16614cc8704a",
-        choice12: "f79e4f78-b321-4a50-af55-bf3787e7a46d",
-        choice13: "ab050eb8-f264-4007-adb8-024e5f656e31",
-        choice14: "dad3012d-85a5-40b5-9a55-866f619b7d57",
+        choice2: "cc31ba93-805a-452a-ad13-2771c249a125",
+        choice3: "0ea82bda-1a52-482b-b8cb-2280bfb8c53c",
+        choice4: "1a0f8783-6422-4e61-99ca-d8a9d752d3f8",
+        choice5: "233c82fa-cbbc-4c47-abd3-9f1a65e94707",
+        choice6: "3bc9d9a7-8590-4e23-a103-13e8ebd6bc8a",
+        choice7: "46ab34cc-3329-422e-81b9-58cf3a8c135e",
         defaultValue: "Image ID written in next section",
     },
     {
         name: "imageConfig",
         label: "Image Panel configuration, select: Image ID written... first, (useful if you copy these app to upload your own image)",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "3960c2c1-f59e-4351-bfc6-20c6315b7734",
         required: true
     },
     {
         name: "row1_LabelText",
-        label: "Row1 Label Text, default: Tip Received / Goal",
-        type: 'str', minLength: 1, maxLength: 26,
+        label: "Row1 Label Text, default:Tip Received / Goal",
+        type: 'str',
+        minLength: 1,
+        maxLength: 26,
         defaultValue: "Tip Received / Goal :",
         required: true
     },
     {
         name: "row1_LabelColor",
         label: "Color Row1 Label, only for Table or Image Panel",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "black",
         required: true
     },
     {
         name: "row1_Color",
         label: "Row1 Text Color, only for Table or Image Panel",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "black",
         required: true
     },
     {
         name: "row1_Background",
         label: "Row1 Background Color, only for Table",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "#ADD8E6",
         required: true
     },
     {
         name: "row2_LabelText",
         label: "Row2 Label Text, default: Highest Tip: ",
-        type: 'str', minLength: 1, maxLength: 26,
+        type: 'str',
+        minLength: 1,
+        maxLength: 26,
         defaultValue: "Highest Tip:",
         required: true
     },
     {
         name: "row2_LabelColor",
         label: "Row2 Label Color, only for Table or Image Panel",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "black",
         required: true
     },
     {
         name: "row2_Color",
         label: "Row2 Tex Color, only for Table or Image Panel",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "black",
         required: true
     },
     {
         name: "row2_Background",
         label: "Row2 Background Color, only for Table",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "pink",
         required: true
     },
     {
         name: "row3_LabelText",
         label: "Row3 Label Text, default: Latest Tip Received: ",
-        type: 'str', minLength: 1, maxLength: 26,
+        type: 'str',
+        minLength: 1,
+        maxLength: 26,
         defaultValue: "Latest Tip :",
         required: true
     },
     {
         name: "row3_LabelColor",
         label: "Row3 Label Color, only for Table or Image Panel",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "black",
         required: true
     },
     {
         name: "row3_Color",
         label: "Row3 Color, only for Table or Image Panel",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "black",
         required: true
     },
     {
         name: "row3_Background",
         label: "Row3 Background Color, only for Table",
-        type: 'str', minLength: 1, maxLength: 50,
+        type: 'str',
+        minLength: 1,
+        maxLength: 50,
         defaultValue: "#ADD8E6",
         required: true
     },
 ];
 
 // handlers
-if (imageSelec != "Image ID written in the next section") {
+
+if (imageSelec != "Image ID written in next section") {
     imageConfigTrue = imageSelec;
 } else {
     imageConfigTrue = imageConfig;
 }
 
-cb.onTip(function(tip) {
+cb.onTip(function (tip) {
     total_tipped += tip['amount'];
+    if (total_tipped > cb.settings.tokens) {
+        total_tipped = cb.settings.tokens;
+    }
     last_tip_amount = tip['amount'];
     last_tip_username = tip['from_user'];
     if (tip['amount'] > high_tip_amount) {
@@ -171,7 +198,7 @@ cb.onTip(function(tip) {
     cb.drawPanel();
 });
 
-cb.onDrawPanel(function(user) {
+cb.onDrawPanel(function (user) {
     if (cb.settings.panelConfig == "image") {
         return {
             "template": "image_template",
@@ -263,8 +290,8 @@ cb.onDrawPanel(function(user) {
                     "col_2": {
                         "color": row2_Color,
                         "text-align": "center",
-                        "value": " " + format_username(high_tip_username) + ' (' + high_tip_amount + ')'
-                    },
+                        "value": " " + format_username(high_tip_username) + ' (' + high_tip_amount + ')',
+                    }
                 },
                 "row_3": {
                     "background-color": row3_Background,
@@ -277,8 +304,8 @@ cb.onDrawPanel(function(user) {
                     "col_2": {
                         "color": row3_Color,
                         "text-align": "center",
-                        "value": " " + format_username(last_tip_username) + ' (' + last_tip_amount + ')'
-                    },
+                        "value": " " + format_username(last_tip_username) + ' (' + last_tip_amount + ')',
+                    }
                 }
             }
         };
@@ -296,3 +323,18 @@ cb.onDrawPanel(function(user) {
 });
 
 cb.drawPanel();
+
+// helper functions
+function format_username(val) {
+    if (val === null) {
+        return "--";
+    } else {
+        return val.substring(0, 12);
+    }
+}
+
+function init() {
+    // No need to call update_subject here
+}
+
+init();
