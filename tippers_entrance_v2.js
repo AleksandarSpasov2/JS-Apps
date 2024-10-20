@@ -1,6 +1,6 @@
 // List of specific users with their associated values
 var specialUsers = [
-    { user: "one_of_the_best", amount: "$500" },
+    { user: "User1", amount: "$500" },
     { user: "User2", amount: "$300" },
     { user: "User3", amount: "$1000" }
 ];
