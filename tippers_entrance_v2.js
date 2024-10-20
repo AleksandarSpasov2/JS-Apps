@@ -1,11 +1,18 @@
-// List of specific users that you will provide later
-var specialUsers = ["one_of_the_best", "User2", "User3"];  // Replace with actual usernames
+// List of specific users with their associated values
+var specialUsers = [
+    { user: "one_of_the_best", amount: "$500" },
+    { user: "User2", amount: "$300" },
+    { user: "User3", amount: "$1000" }
+];
 
 // Event handler when someone enters the chat
 cb.onEnter(function(user) {
-    // Check if the entered user is in the specialUsers list
-    if (specialUsers.includes(user['user'])) {
-        // Send a private notice only to the broadcaster with a dark purple color
-        cb.sendNotice(":moneyfly User " + user['user'] + " has entered the room :moneyfly", cb.room_slug, null, "#9400D3", 'bold');
+    // Find the user in the specialUsers list
+    var foundUser = specialUsers.find(u => u.user === user['user']);
+
+    // If the user is in the specialUsers list
+    if (foundUser) {
+        // Send a private notice only to the broadcaster with a dark purple color and the associated amount
+        cb.sendNotice(":moneyfly " + foundUser.user + " has entered the room " + foundUser.amount + " :moneyfly", cb.room_slug, null, "#9400D3", 'bold');
     }
 });
